@@ -13,12 +13,12 @@ TaskRouter.get('/', getActiveTasks);
 TaskRouter.post('/add', createTask);
 
 // Eliminar una tarea por su ID
-routerTaskRouter.delete('/:id', softDeleteTask);
+TaskRouter.delete('/:id_task', softDeleteTask);
 
 // Actualizar una tarea por su ID
-TaskRouter.put('/:id', updateTask);
+TaskRouter.put('/:id_task', updateTask);
 
 // Actualizar el estado de una tare
-TaskRouter.patch('/:id', changeStatusTask);
+TaskRouter.patch('/:id_task', changeStatusTask);
 
 export { TaskRouter };

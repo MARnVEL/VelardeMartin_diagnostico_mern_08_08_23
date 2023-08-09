@@ -7,8 +7,8 @@ export const connectDB = async () => {
 
     const MONGO_ATLAS_URL = `mongodb+srv://${TASK_APP_MONGODB_USERNAME}:${TASK_APP_MONGODB_PASWORD}@${TASK_APP_MONGO_CLUSTER}.mongodb.net/${TASK_APP_MONGODB_DATABASE}`;
 
-    //!Conexión a BD local con MONGO DB COMPASS:
-    const MONGO_COMPASS_URI = `mongodb://${TASK_APP_MONGODB_HOST}/${TASK_APP_MONGODB_DATABASE}`;
+    //! Conexión a BD local con MONGO DB COMPASS:
+    // const MONGO_COMPASS_URI = `mongodb://${TASK_APP_MONGODB_HOST}/${TASK_APP_MONGODB_DATABASE}`;
 
     try {
         //*Conexión a Atlas

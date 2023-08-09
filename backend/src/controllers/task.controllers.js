@@ -35,14 +35,13 @@ const getActiveTasks = async (_req, res) => {
 
 //!----- Controlador para CREAR una tarea en la Base de Datos -----------
 const createTask = async (req, res) => {
-    const { title, description, status, ...OtherDataTask } = req.body;
+    const { title, description, ...OtherDataTask } = req.body;
 
     //Esto viene del auth.controllers: Cuando se hace la validación del jwt lo que se pega en la request, se pega con el guión bajo id ("_id"), y no con el uid. Ver controlador task (método createTask() del archivo task.controllers.js, en la parte de creación de una nueva tarea).
 
     const newTask = new TaskModel({
         title,
-        description,
-        status
+        description
     });
 
     try {
@@ -59,7 +58,7 @@ const createTask = async (req, res) => {
             })
             .end();
     } catch (error) {
-        console.log('Error trying to CREATE task', err);
+        console.log('Error trying to CREATE task', error);
         return res.status(500).json({
             msg: 'There was an error in the CREATION of the NEW TASK.'
         });
@@ -72,9 +71,9 @@ const updateTask = async (req, res) => {
 
     const { title, description, status, ...OtherDataTask } = req.body;
 
-    if (!title || !description || !status) {
+    if (!title || !description) {
         //!OJO acá podría dar un error
-        console.log('The task data is incomplete!');
+        console.log('The data task is incomplete!');
         return res.status(400).json({
             msg: 'Please fill all the fields correctly.'
         });

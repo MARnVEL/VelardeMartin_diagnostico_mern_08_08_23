@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+import { Schema, model } from 'mongoose';
 
 const TaskSchema = new Schema(
     {
@@ -14,8 +14,8 @@ const TaskSchema = new Schema(
 
         status: {
             type: Boolean,
-            required: true,
-            default: 'Pending'
+            required: false,
+            default: true
         },
 
         // dueDate : {

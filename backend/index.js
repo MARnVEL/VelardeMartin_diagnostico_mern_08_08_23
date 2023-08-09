@@ -31,7 +31,7 @@ import { TaskRouter } from './src/routes/tasks.routes.js';
 //* Importo todos los endpoints correspondientes al inicio de sesión
 // const auth = require('./src/routes/auth.routes');
 
-//* #############################- MIDDLEWARES -##################################################
+//* #################- MIDDLEWARES -###############################
 
 expressApp.use(morgan('dev'));
 expressApp.use(express.json());
@@ -42,8 +42,9 @@ expressApp.use(
     })
 );
 
-expressApp.get('/api', (req, res) => {
-    return res.status(200).send('Hola');
+/* Checkeo de api */
+expressApp.get('/ping', (req, res) => {
+    return res.status(200).json({ message: 'pong' });
 });
 
 expressApp.use('/api/tasks/', TaskRouter);
@@ -53,8 +54,6 @@ expressApp.use('/api/tasks/', TaskRouter);
 //! La siguiente línea establece que el servidor tome como referencia por defecto todo lo que está dentro de la carpeta públic. Recibe como parámetro una carpeta donde están todos los ficheros que quiero enviar al cliente.
 expressApp.use(express.static('public'));
 // expressApp.use(express.static(path.join(__dirname, 'public')));
-
-//* ###############################    RUTAS Y CONTROLADORES    ############################
 
 //* #############################- STARTING SERVER -################################################
 expressApp.listen(port, () => {
