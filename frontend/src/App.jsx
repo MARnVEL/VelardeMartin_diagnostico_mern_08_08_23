@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import Tasks from './components/Tasks';
-
-import './App.css';
+// custom components
+import CustomForm from './components/CustomForm';
+import TaskList from './components/TaskList';
 
 function App() {
     const [tasks, setTasks] = useState([]);
@@ -64,7 +64,7 @@ function App() {
                 <input type="text" placeholder="Salir a correr" name="description" />
                 <button type="submit">Crear</button>
             </form>
-            <Tasks />
+            <TaskList />
         </main>
     );
 }
