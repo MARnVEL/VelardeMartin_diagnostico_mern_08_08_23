@@ -35,12 +35,13 @@ import { TaskRouter } from './src/routes/tasks.routes.js';
 
 expressApp.use(morgan('dev'));
 expressApp.use(express.json());
-expressApp.use(
+/* expressApp.use(
     cors({
         origin: 'http://localhost:5173'
         // methods: {}
     })
-);
+); */
+expressApp.use(cors());
 
 /* Checkeo de api */
 expressApp.get('/ping', (req, res) => {

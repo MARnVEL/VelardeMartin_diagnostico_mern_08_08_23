@@ -24,7 +24,7 @@ const getActiveTasks = async (_req, res) => {
         return res
             .status(200)
             .json({
-                message: `### 🌟👇Quantity of active tasks: # ${tasks.length} ###`,
+                message: `### 🌟👇Quantity of active tasks: * ${tasks.length} * ###`,
                 tasks
             })
             .end();
@@ -35,12 +35,11 @@ const getActiveTasks = async (_req, res) => {
 
 //!----- Controlador para CREAR una tarea en la Base de Datos -----------
 const createTask = async (req, res) => {
-    const { title, description, ...OtherDataTask } = req.body;
+    const { description, ...OtherDataTask } = req.body;
 
     //Esto viene del auth.controllers: Cuando se hace la validación del jwt lo que se pega en la request, se pega con el guión bajo id ("_id"), y no con el uid. Ver controlador task (método createTask() del archivo task.controllers.js, en la parte de creación de una nueva tarea).
 
     const newTask = new TaskModel({
-        title,
         description
     });
 
@@ -69,9 +68,9 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
     const id_task = req.params.id_task; //Obtengo el id de la tarea que viene en la ruta.
 
-    const { title, description, status, ...OtherDataTask } = req.body;
+    const { description, status, ...OtherDataTask } = req.body;
 
-    if (!title || !description) {
+    if (!description) {
         //!OJO acá podría dar un error
         console.log('The data task is incomplete!');
         return res.status(400).json({
@@ -95,7 +94,6 @@ const updateTask = async (req, res) => {
         }
 
         const theUpdatedTask = await theOldTask.updateOne({
-            title,
             description,
             status
         });

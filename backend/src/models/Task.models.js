@@ -2,10 +2,10 @@ import { Schema, model } from 'mongoose';
 
 const TaskSchema = new Schema(
     {
-        title: {
+        /* title: {
             type: String,
             required: true
-        },
+        }, */
 
         description: {
             type: String,
@@ -15,7 +15,7 @@ const TaskSchema = new Schema(
         status: {
             type: Boolean,
             required: false,
-            default: true
+            default: false
         },
 
         // dueDate : {
