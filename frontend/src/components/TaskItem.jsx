@@ -7,11 +7,32 @@ import { CheckIcon, PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outl
 // Styles
 import styles from './TaskItem.module.css';
 
+// Custom utils:
+import { fetchData } from '../utils/fetchData';
+
 const TaskItem = ({ task }) => {
 
     const [isChecked, setIsChecked] = useState(task.status);
 
     const handleCheckBoxChange = (e) => {
+
+        console.log(e.target.id);
+        console.log(e.target.value);
+        let status = e.target.value === on ? true : false;
+        // const url = `http://localhost:3000/api/tasks/${id}`;
+        // const options = {
+        //     method: 'PATCH',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({
+        //         status
+        //     })
+        // }
+        // const apiData = fetchData( url, options );
+        
+        // const data = await apiData.read();
+
         setIsChecked(!isChecked);
     };
 
@@ -51,9 +72,7 @@ const TaskItem = ({ task }) => {
                     // onClick={}
                 >
                     <TrashIcon width={24} height={24}/>
-
                 </button>
-
 
             </div>
         </li>
