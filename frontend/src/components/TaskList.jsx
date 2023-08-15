@@ -8,14 +8,16 @@ import { convertToMillis } from "../library/library";
 // Styles
 import styles from './TaskList.module.css';
 
-const TaskList = ({ tasks }) => {
+const TaskList = ({ tasks, setTasks }) => {
     
+
     return(
         <ul className={styles.tasks}>
             {tasks.sort((a, b) => convertToMillis(b.updatedAt) - convertToMillis(a.updatedAt)).map(task => (
                 <TaskItem
                     key={task._id}
                     task={task}
+                    setTasks={setTasks}
                 />
                 )
             )}

@@ -3,19 +3,21 @@ import { useState } from 'react';
 // library imports
 import { PlusIcon } from '@heroicons/react/24/solid';
 
-const CustomForm = ({ fnToAddATask }) => {
+const CustomForm = ({ fnToAddATask, setTasks }) => {
     const [task, setTask] = useState('');
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         // console.log(e);
-        await fnToAddATask({
+        const response = await fnToAddATask({
             description: task,
             status: false
         });
 
         setTask('');
-        console.log(task)
+        
+        setTasks( prevState => [...prevState, response.created_task] )
+        // console.log('La task dentro del handleFormSubmit del CustosmForm: ', task)
     };
     return (
         <form className="todo" onSubmit={handleFormSubmit}>

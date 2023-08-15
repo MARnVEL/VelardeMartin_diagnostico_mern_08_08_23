@@ -163,14 +163,15 @@ const changeStatusTask = async (req, res) => {
     const id_task = req.params.id_task; //Obtengo el id de la tarea que viene en la ruta.
 
     const { status } = req.body;
+    console.log(status);
 
-    if (!status) {
-        //!OJO acá podría dar un error
-        console.log('The task data is incomplete!');
-        return res.status(400).json({
-            msg: 'Please fill all the fields correctly.'
-        });
-    }
+    // if ( status !== 'true' || status !== 'false' ) {
+    //     //!OJO acá podría dar un error
+    //     console.log('The task data is incomplete!');
+    //     return res.status(400).json({
+    //         msg: 'Please fill all the fields correctly.'
+    //     });
+    // }
 
     if (!id_task) {
         return res.status(400).json({
@@ -191,12 +192,14 @@ const changeStatusTask = async (req, res) => {
             status
         });
 
+        const theNewTask = await TaskModel.findById(id_task)
+
         console.log('The taks has been updated successfully');
         return res
             .status(200)
             .json({
                 msj: 'Task updated successfully ✨',
-                updated_task: theUpdatedTask
+                updated_task: theNewTask
             })
             .end();
     } catch (error) {
