@@ -7,7 +7,12 @@ import { convertToMillis } from '../library/library';
 // Styles
 import styles from './TaskList.module.css';
 
-const TaskList = ({ tasks, setTasks, fnToCompleteATask, fnToDeleteATask }) => {
+const TaskList = ({
+        tasks,
+        fnToCompleteATask,
+        fnToDeleteATask,
+        fnToUpdateATask
+    }) => {
     return (
         <ul className={styles.tasks}>
             {tasks
@@ -18,6 +23,7 @@ const TaskList = ({ tasks, setTasks, fnToCompleteATask, fnToDeleteATask }) => {
                         task={task}
                         fnToCompleteATask={fnToCompleteATask}
                         fnToDeleteATask={fnToDeleteATask}
+                        fnToUpdateATask={fnToUpdateATask}
                     />
                 ))}
         </ul>

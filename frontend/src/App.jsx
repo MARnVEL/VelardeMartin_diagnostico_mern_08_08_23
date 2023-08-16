@@ -138,6 +138,10 @@ function App() {
         }
     }
 
+    const fnToUpdateATask = async () => {
+        console.log(e);
+    }
+
     return (
         <main>
             <div className="container">
@@ -148,9 +152,9 @@ function App() {
                 {tasks && 
                     <TaskList
                         tasks={tasks}
-                        setTasks={setTasks}
                         fnToCompleteATask={fnToCompleteATask}
                         fnToDeleteATask={fnToDeleteATask}
+                        fnToUpdateATask={fnToUpdateATask}
                     />}
             </div>
         </main>

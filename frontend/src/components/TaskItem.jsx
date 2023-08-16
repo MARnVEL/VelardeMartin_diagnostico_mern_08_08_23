@@ -10,7 +10,7 @@ import styles from './TaskItem.module.css';
 // Custom utils:
 
 
-const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask }) => {
+const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask, fnToUpdateATask }) => {
 
 
     const [isChecked, setIsChecked] = useState(task.status);
