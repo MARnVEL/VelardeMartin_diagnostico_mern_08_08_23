@@ -8,6 +8,8 @@ import TaskList from './components/TaskList';
 function App() {
     const [tasks, setTasks] = useState(null);
     const [editedTask, setEditedTask] = useState(null);
+    const [isEditing, setIsEditing] = useState(false);
+    const [previousFocusElement, setPreviousFocusElement] = useState(null);
 
     
     // Preparamos el cuerpo de la request;
@@ -29,11 +31,11 @@ function App() {
         const response = await fetch(API_URL, options);
         const data = await response.json();
         setTasks(data.tasks);
-    };
+    }
 
     useEffect(() => {
         fetchTasks();
-    });
+    }, []);
 
     const fnToAddATask = async ({ description }) => {
         const url = 'http://localhost:3000/api/tasks/add';
@@ -183,6 +185,16 @@ function App() {
         }
     }
 
+    const enterEditMode = (task) => {
+        setEditedTask(task);
+        setIsEditing(true);
+        setPreviousFocusElement(document.activeElement);
+    };
+
+    const closeEditMode = () => {
+        setIsEditing(false);
+    };
+
 
     /**
      * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
@@ -191,14 +203,13 @@ function App() {
      * 
      * @param {string} id El id de la tarea que se actualizará en la UI.
      */
-
     const updateTask = (task) => {
         setTasks(prevState => prevState.map(t => (
             t._id === task._id
                 ? {...t, description: task.description}
                 : t
         )));
-
+        closeEditMode();
     };
 
 
@@ -213,19 +224,24 @@ function App() {
                 <header>
                     <h1>My To Do wApp</h1>
                 </header>
-                <section>
-                    <EditForm
-                        editedTask={editedTask}
-                        fnToUpdateATask={fnToUpdateATask}    
-                    />
-                </section>
+
+                {
+                    isEditing && (
+                        <EditForm
+                            editedTask={editedTask}
+                            fnToUpdateATask={fnToUpdateATask}
+                            closeEditMode={closeEditMode}
+                        />
+                    )
+                }
                 <CustomForm fnToAddATask={fnToAddATask} setTasks={setTasks} />
                 {tasks && 
                     <TaskList
                         tasks={tasks}
                         fnToCompleteATask={fnToCompleteATask}
                         fnToDeleteATask={fnToDeleteATask}
-                        fnToUpdateATask={fnToUpdateATask}
+                        // fnToUpdateATask={fnToUpdateATask}
+                        enterEditMode={enterEditMode}
                     />
                 }
             </div>

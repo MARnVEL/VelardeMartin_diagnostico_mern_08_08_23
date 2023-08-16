@@ -10,7 +10,13 @@ import styles from './TaskItem.module.css';
 // Custom utils:
 
 
-const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask, fnToUpdateATask }) => {
+const TaskItem = ({
+        task,
+        fnToCompleteATask,
+        fnToDeleteATask,
+        // fnToUpdateATask,
+        enterEditMode
+}) => {
 
 
     const [isChecked, setIsChecked] = useState(task.status);
@@ -28,11 +34,10 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask, fnToUpdateATask })
     const handleDeleteTask = (id) => {
         fnToDeleteATask(id);
     }
-
+    /* 
     const handleUpdateTask = (id) => {
-
     };
-
+    */
     return (
         <li className={styles.task}>
             <div className={styles["task-group"]}>
@@ -58,7 +63,7 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask, fnToUpdateATask })
                 <button
                     className='btn'
                     aria-label={`Update ${task.description} Task`}
-                    // onClick={}
+                    onClick={() => enterEditMode(task)}
                 >
                     <PencilSquareIcon width={24} height={24}/>
 

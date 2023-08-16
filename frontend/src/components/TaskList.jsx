@@ -11,7 +11,8 @@ const TaskList = ({
         tasks,
         fnToCompleteATask,
         fnToDeleteATask,
-        fnToUpdateATask
+        // fnToUpdateATask,
+        enterEditMode
     }) => {
     return (
         <ul className={styles.tasks}>
@@ -23,7 +24,8 @@ const TaskList = ({
                         task={task}
                         fnToCompleteATask={fnToCompleteATask}
                         fnToDeleteATask={fnToDeleteATask}
-                        fnToUpdateATask={fnToUpdateATask}
+                        // fnToUpdateATask={fnToUpdateATask}
+                        enterEditMode={enterEditMode}
                     />
                 ))}
         </ul>
