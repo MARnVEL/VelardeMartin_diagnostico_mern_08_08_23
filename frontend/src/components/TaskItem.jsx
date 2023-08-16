@@ -10,64 +10,17 @@ import styles from './TaskItem.module.css';
 // Custom utils:
 
 
-const TaskItem = ({ task, setTasks }) => {
-    
-    const [ taskItem, setTaskItem ] = useState({});
+const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask }) => {
 
 
     const [isChecked, setIsChecked] = useState(task.status);
     
     const handleCheckBoxChange = async (e) => {
-        
         let id = e.target.id;
         let status = e.target.checked;
-        console.log('el status: ', status)
+        // console.log('el status: ', status);
         
-        
-        const url = `http://localhost:3000/api/tasks/${id}`;
-        const options = {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                status
-            })
-        }
-
-        try {
-            const request = await fetch(url, options);
-            console.log('El request: ', request)
-            if (request.status !== 200) {
-                alert('error al actualizar la tarea');
-                return;
-            }
-
-            const response = await request.json();
-            console.log('La response en el handleCheckbox: ', response)
-            if (!response) {
-                alert('tarea actualizada ok');
-            }
-
-            setTaskItem( response.updated_task  )
-
-            return response;
-            // useEffect(() => {
-            //     async function fetchTasks() {
-            //         const response = await fetch(API_URL);
-            //         const data = await response.json();
-            //         setTasks(data.tasks);
-            //     }
-            //     fetchTasks();
-            // }, [])
-            
-        } catch (error) {
-            console.log(error);
-            alert(`Error: ${error.message}`);
-        }
-
-        
-        
+        fnToCompleteATask(id, status);
 
         setIsChecked(!isChecked);
     };
@@ -96,7 +49,7 @@ const TaskItem = ({ task, setTasks }) => {
             <div className={styles["task-group"]}>
                 <button
                     className='btn'
-                    aria-label={`Update ${taskItem.description} Task`}
+                    aria-label={`Update ${task.description} Task`}
                     // onClick={}
                 >
                     <PencilSquareIcon width={24} height={24}/>
@@ -104,7 +57,7 @@ const TaskItem = ({ task, setTasks }) => {
                 </button>
                 <button
                     className={`btn ${styles.delete}`}
-                    aria-label={`Delete ${taskItem.description} Task`}
+                    aria-label={`Delete ${task.description} Task`}
                     // onClick={}
                 >
                     <TrashIcon width={24} height={24}/>
