@@ -20,6 +20,9 @@ function App() {
         }
     };
     
+    /**
+     * Funcion para hacer el primer fetch y traer todas las tareas de la colección.
+     */
     async function fetchTasks() {
         const response = await fetch(API_URL, options);
         const data = await response.json();
@@ -42,7 +45,6 @@ function App() {
         };
         try {
             const request = await fetch(url, options);
-            console.log('El request: ', request);
             if (request.status !== 200) {
                 alert('error al crear la tarea');
                 return;
@@ -60,7 +62,7 @@ function App() {
     };
 
     const fnToCompleteATask = async (taskId, status) => {
-        console.log(taskId);
+        // console.log(taskId);
         const url = `http://localhost:3000/api/tasks/${taskId}`;
         const options = {
             method: 'PATCH',
@@ -74,18 +76,22 @@ function App() {
 
         try {
             const request = await fetch(url, options);
-            console.log('El request: ', request)
+
             if (request.status !== 200) {
                 alert('error al actualizar la tarea');
                 return;
             }
 
             const response = await request.json();
-            console.log('La response en el handleCheckbox: ', response)
+
             if (!response) {
                 alert('tarea actualizada ok');
             }
 
+            // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
+            /*
+            ! Problema de este método: cada vez que modifique una tarea (aunque sólo sea una parte de ella), debo volver a llamar al backend para que me haga la consulta a la BD, traer toodas las task de nuevo al estado del App() y por lo tanto, re-rederizar todas las tareas.
+            */
             fetchTasks();
             // return response;
 
@@ -96,7 +102,40 @@ function App() {
     };
 
     const fnToDeleteATask = async (taskId) => {
-        console.log('Id dentro del fnToDelete: ', taskId);
+        // console.log('Id dentro del fnToDelete: ', taskId);
+        const url = `http://localhost:3000/api/tasks/${taskId}`;
+        const options = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+
+        try {
+            const request = await fetch(url, options);
+
+            if (request.status !== 200) {
+                alert('error al eliminar la tarea');
+                return;
+            }
+
+            const response = await request.json();
+
+            if (!response) {
+                alert('tarea actualizada ok');
+            }
+
+            // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
+            /*
+            ! Problema de este método: cada vez que modifique una tarea (aunque sólo sea una parte de ella), debo volver a llamar al backend para que me haga la consulta a la BD, traer toodas las task de nuevo al estado del App() y por lo tanto, re-rederizar todas las tareas.
+            */
+            fetchTasks();
+            // return response;
+
+        } catch (error) {
+            console.log(error);
+            alert(`Error: ${error.message}`);
+        }
     }
 
     return (

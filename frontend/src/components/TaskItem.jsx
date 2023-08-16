@@ -15,7 +15,7 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask }) => {
 
     const [isChecked, setIsChecked] = useState(task.status);
     
-    const handleCheckBoxChange = async (e) => {
+    const handleCheckBoxChange = (e) => {
         let id = e.target.id;
         let status = e.target.checked;
         // console.log('el status: ', status);
@@ -24,6 +24,12 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask }) => {
 
         setIsChecked(!isChecked);
     };
+    
+    const handleDeleteTask = (id) => {
+
+        fnToDeleteATask(id);
+
+    }
 
     return (
         <li className={styles.task}>
@@ -58,7 +64,7 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask }) => {
                 <button
                     className={`btn ${styles.delete}`}
                     aria-label={`Delete ${task.description} Task`}
-                    // onClick={}
+                    onClick={() => handleDeleteTask(task._id)}
                 >
                     <TrashIcon width={24} height={24}/>
                 </button>
