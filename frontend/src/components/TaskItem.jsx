@@ -26,10 +26,12 @@ const TaskItem = ({ task, fnToCompleteATask, fnToDeleteATask, fnToUpdateATask })
     };
     
     const handleDeleteTask = (id) => {
-
         fnToDeleteATask(id);
-
     }
+
+    const handleUpdateTask = (id) => {
+
+    };
 
     return (
         <li className={styles.task}>
