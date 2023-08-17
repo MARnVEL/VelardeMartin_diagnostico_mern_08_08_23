@@ -213,8 +213,47 @@ function App() {
     };
 
 
-    const fnToUpdateATask = async () => {
-        console.log(e);
+    const fnToUpdateATask = async (taskId) => {
+
+        const url = `http://localhost:3000/api/tasks/${taskId}`;
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+
+        try {
+            const request = await fetch(url, options);
+
+            if (request.status !== 200) {
+                alert('error al actualizar la tarea');
+                return;
+            }
+
+            const response = await request.json();
+
+            if (!response) {
+                alert('tarea actualizada ok');
+            }
+
+            // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
+            /*
+            ! Problema de este método: cada vez que modifique una tarea (aunque sólo sea una parte de ella), debo volver a llamar al backend para que me haga la consulta a la BD, traer toodas las task de nuevo al estado del App() y por lo tanto, re-rederizar todas las tareas.
+            */
+            // fetchTasks();
+            /*
+            ! Solución: primero modifico la BD y luego hago un render de la UI sólo
+            ! en la parte que necesito
+            */
+            updateTask(taskId);
+            
+            // return response;
+
+        } catch (error) {
+            console.log(error);
+            alert(`Error: ${error.message}`);
+        }
 
     }
 
@@ -229,8 +268,8 @@ function App() {
                     isEditing && (
                         <EditForm
                             editedTask={editedTask}
-                            fnToUpdateATask={fnToUpdateATask}
                             closeEditMode={closeEditMode}
+                            fnToUpdateATask={fnToUpdateATask}
                         />
                     )
                 }

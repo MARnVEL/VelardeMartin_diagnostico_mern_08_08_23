@@ -3,7 +3,7 @@ import { useState } from 'react';
 // library imports
 import { CheckIcon } from '@heroicons/react/24/outline';
 
-const EditForm = ({ editedTask, fnToUpdateATask }) => {
+const EditForm = ({ editedTask, closeEditMode, fnToUpdateATask }) => {
     
     const [ 
         updatedTaskDescription,
