@@ -72,7 +72,7 @@ function App() {
      * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
      * datos actualizados de la BD.
      * 
-     * @param {string} id El id de la tarea que cambiara su estado de completo a incompleto o viceversa
+     * @param {string} id El id de la tarea que cambiará su estado de completo a incompleto o viceversa
      */
     const toggleTaskUI = (id) => {
         setTasks(prevState => prevState.map(t => (
@@ -117,7 +117,7 @@ function App() {
 
             /*
             ! Solución: primero modifico la BD y luego hago un render de la UI sólo
-            ! en la parte que necesito
+            ! en la parte que necesito.
             */
             toggleTaskUI(taskId);
             // return response;
@@ -188,11 +188,13 @@ function App() {
     const enterEditMode = (task) => {
         setEditedTask(task);
         setIsEditing(true);
+        
         setPreviousFocusElement(document.activeElement);
     };
 
     const closeEditMode = () => {
         setIsEditing(false);
+        previousFocusElement.focus();
     };
 
 
@@ -213,14 +215,19 @@ function App() {
     };
 
 
-    const fnToUpdateATask = async (taskId) => {
+    const fnToUpdateATask = async (task) => {
+        const taskId = task._id;
+        const description = task.description;
 
         const url = `http://localhost:3000/api/tasks/${taskId}`;
         const options = {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
+            body: JSON.stringify({
+                description
+            })
         }
 
         try {
@@ -232,6 +239,7 @@ function App() {
             }
 
             const response = await request.json();
+            // console.log('La respuesta del fnToUpdateATask: ', response);
 
             if (!response) {
                 alert('tarea actualizada ok');
@@ -246,9 +254,7 @@ function App() {
             ! Solución: primero modifico la BD y luego hago un render de la UI sólo
             ! en la parte que necesito
             */
-            updateTask(taskId);
-            
-            // return response;
+            updateTask(task);
 
         } catch (error) {
             console.log(error);
@@ -279,7 +285,6 @@ function App() {
                         tasks={tasks}
                         fnToCompleteATask={fnToCompleteATask}
                         fnToDeleteATask={fnToDeleteATask}
-                        // fnToUpdateATask={fnToUpdateATask}
                         enterEditMode={enterEditMode}
                     />
                 }

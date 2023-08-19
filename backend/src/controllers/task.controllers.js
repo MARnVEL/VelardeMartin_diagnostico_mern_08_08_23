@@ -68,8 +68,8 @@ const createTask = async (req, res) => {
 const updateTask = async (req, res) => {
     const id_task = req.params.id_task; //Obtengo el id de la tarea que viene en la ruta.
 
-    const { description, status, ...OtherDataTask } = req.body;
-
+    const { description, ...OtherDataTask } = req.body;
+    console.log('La description que recibe el back: ', description)
     if (!description) {
         //!OJO acá podría dar un error
         console.log('The data task is incomplete!');
@@ -94,16 +94,17 @@ const updateTask = async (req, res) => {
         }
 
         const theUpdatedTask = await theOldTask.updateOne({
-            description,
-            status
+            description
         });
 
         console.log('The taks has been updated successfully');
+        const theNewTask = await TaskModel.findById(id_task)
+
         return res
             .status(200)
             .json({
                 msj: 'Task updated successfully ✨',
-                updated_task: theUpdatedTask
+                updated_task: theNewTask
             })
             .end();
     } catch (error) {

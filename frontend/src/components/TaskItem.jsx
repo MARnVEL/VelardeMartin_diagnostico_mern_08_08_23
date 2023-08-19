@@ -14,7 +14,6 @@ const TaskItem = ({
         task,
         fnToCompleteATask,
         fnToDeleteATask,
-        // fnToUpdateATask,
         enterEditMode
 }) => {
 
@@ -33,11 +32,8 @@ const TaskItem = ({
     
     const handleDeleteTask = (id) => {
         fnToDeleteATask(id);
-    }
-    /* 
-    const handleUpdateTask = (id) => {
     };
-    */
+
     return (
         <li className={styles.task}>
             <div className={styles["task-group"]}>
@@ -60,6 +56,7 @@ const TaskItem = ({
                 </label>
             </div>
             <div className={styles["task-group"]}>
+
                 <button
                     className='btn'
                     aria-label={`Update ${task.description} Task`}
@@ -68,6 +65,7 @@ const TaskItem = ({
                     <PencilSquareIcon width={24} height={24}/>
 
                 </button>
+
                 <button
                     className={`btn ${styles.delete}`}
                     aria-label={`Delete ${task.description} Task`}

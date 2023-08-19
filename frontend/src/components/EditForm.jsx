@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // library imports
 import { CheckIcon } from '@heroicons/react/24/outline';
@@ -10,16 +10,28 @@ const EditForm = ({ editedTask, closeEditMode, fnToUpdateATask }) => {
         setUpdatedTaskDescription
     ] = useState(editedTask.description);
 
+    useEffect(() => {
+        const closeModalIfEscaped = (e) => {
+            e.key === 'Escape' && closeEditMode();
+        }
+        window.addEventListener('keydown', closeModalIfEscaped);
+        return () => {
+            window.removeEventListener('keydown', closeModalIfEscaped);
+        }
+    }, [closeEditMode]);
+
+
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
-        // fnToUpdateATask();
-        
+        fnToUpdateATask({...editedTask, description: updatedTaskDescription});
+
     };
     return (
         <div
             role='dialog'
             aria-labelledby='editTask'
-            // onClick={}
+            onClick={ (e) => { e.target === e.currentTarget && closeEditMode() } }
         >
             <form className="todo" onSubmit={handleFormSubmit}>
                 <div className="wrapper">
@@ -42,7 +54,7 @@ const EditForm = ({ editedTask, closeEditMode, fnToUpdateATask }) => {
                 <button
                     className="btn"
                     aria-label={`
-                        Confirme actualizar la tarea para que se lea: ${updatedTaskDescription}
+                        Confirme actualizar la tarea para que ahora se lea: ${updatedTaskDescription}
                     `}
                     type="submit"
                 >
