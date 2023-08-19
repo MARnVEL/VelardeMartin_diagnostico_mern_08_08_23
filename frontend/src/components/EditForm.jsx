@@ -13,14 +13,14 @@ const EditForm = ({ editedTask, closeEditMode, fnToUpdateATask }) => {
     useEffect(() => {
         const closeModalIfEscaped = (e) => {
             e.key === 'Escape' && closeEditMode();
-        }
+        };
+
         window.addEventListener('keydown', closeModalIfEscaped);
+
         return () => {
             window.removeEventListener('keydown', closeModalIfEscaped);
-        }
+        };
     }, [closeEditMode]);
-
-
 
     const handleFormSubmit = async (e) => {
         e.preventDefault();

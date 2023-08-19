@@ -199,11 +199,11 @@ function App() {
 
 
     /**
-     * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
+     * Esta función se utiliza para actualizar una tarea en la interfaz del cliente sin
      * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
      * datos actualizados de la BD.
      * 
-     * @param {string} id El id de la tarea que se actualizará en la UI.
+     * @param {object} task Un objeto tarea que es la tarea que se actualizará en la UI.
      */
     const updateTask = (task) => {
         setTasks(prevState => prevState.map(t => (
