@@ -11,7 +11,6 @@ function App() {
     const [isEditing, setIsEditing] = useState(false);
     const [previousFocusElement, setPreviousFocusElement] = useState(null);
 
-    
     // Preparamos el cuerpo de la request;
     //const API_KEY = import.meta.env.VITE_API_KEY;
     const API_URL = import.meta.env.VITE_API_URL;
@@ -214,7 +213,6 @@ function App() {
         closeEditMode();
     };
 
-
     const fnToUpdateATask = async (task) => {
         const taskId = task._id;
         const description = task.description;
@@ -273,19 +271,19 @@ function App() {
                 {
                     isEditing && (
                         <EditForm
-                            editedTask={editedTask}
-                            closeEditMode={closeEditMode}
-                            fnToUpdateATask={fnToUpdateATask}
+                            editedTask={ editedTask }
+                            closeEditMode={ closeEditMode }
+                            fnToUpdateATask={ fnToUpdateATask }
                         />
                     )
                 }
-                <CustomForm fnToAddATask={fnToAddATask} setTasks={setTasks} />
+                <CustomForm fnToAddATask={ fnToAddATask } setTasks={ setTasks } />
                 {tasks && 
                     <TaskList
-                        tasks={tasks}
-                        fnToCompleteATask={fnToCompleteATask}
-                        fnToDeleteATask={fnToDeleteATask}
-                        enterEditMode={enterEditMode}
+                        tasks={ tasks }
+                        fnToCompleteATask={ fnToCompleteATask }
+                        fnToDeleteATask={ fnToDeleteATask }
+                        enterEditMode={ enterEditMode }
                     />
                 }
             </div>
