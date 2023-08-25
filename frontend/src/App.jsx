@@ -19,7 +19,7 @@ function App() {
     const [editedTask, setEditedTask] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [previousFocusElement, setPreviousFocusElement] = useState(null);
-    
+
     useEffect(() => {
         fetchTasks().then((tasks) => {
             setTasks(tasks);
@@ -197,7 +197,6 @@ function App() {
         closeEditMode();
     };
 
-
     const fnToUpdateATask = async (task) => {
         const taskId = task._id;
         const description = task.description;
@@ -256,19 +255,19 @@ function App() {
                 {
                     isEditing && (
                         <EditForm
-                            editedTask={editedTask}
-                            closeEditMode={closeEditMode}
-                            fnToUpdateATask={fnToUpdateATask}
+                            editedTask={ editedTask }
+                            closeEditMode={ closeEditMode }
+                            fnToUpdateATask={ fnToUpdateATask }
                         />
                     )
                 }
-                <CustomForm fnToAddATask={fnToAddATask} setTasks={setTasks} />
+                <CustomForm fnToAddATask={ fnToAddATask } setTasks={ setTasks } />
                 {tasks && 
                     <TaskList
-                        tasks={tasks}
-                        fnToCompleteATask={fnToCompleteATask}
-                        fnToDeleteATask={fnToDeleteATask}
-                        enterEditMode={enterEditMode}
+                        tasks={ tasks }
+                        fnToCompleteATask={ fnToCompleteATask }
+                        fnToDeleteATask={ fnToDeleteATask }
+                        enterEditMode={ enterEditMode }
                     />
                 }
             </div>
