@@ -5,36 +5,25 @@ import CustomForm from './components/CustomForm';
 import EditForm from './components/EditForm';
 import TaskList from './components/TaskList';
 
+//My services
+import { 
+    fetchTasks,
+    addTask,
+    completeTask,
+    deleteTask,
+    updateTaks
+} from './services/api/task.api';
+
 function App() {
     const [tasks, setTasks] = useState(null);
     const [editedTask, setEditedTask] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
     const [previousFocusElement, setPreviousFocusElement] = useState(null);
-
     
-    // Preparamos el cuerpo de la request;
-    //const API_KEY = import.meta.env.VITE_API_KEY;
-    const API_URL = import.meta.env.VITE_API_URL;
-    // console.log('La url', API_URL);
-    
-    const options = {
-        headers: {
-            'Content-type': 'application/json'
-            // "Authorization": API_KEY
-        }
-    };
-    
-    /**
-     * Funcion para hacer el primer fetch y traer todas las tareas de la colección.
-     */
-    async function fetchTasks() {
-        const response = await fetch(API_URL, options);
-        const data = await response.json();
-        setTasks(data.tasks);
-    }
-
     useEffect(() => {
-        fetchTasks();
+        fetchTasks().then((tasks) => {
+            setTasks(tasks);
+        });
     }, []);
 
     const fnToAddATask = async ({ description }) => {
@@ -49,13 +38,7 @@ function App() {
             })
         };
         try {
-            const request = await fetch(url, options);
-            if (request.status !== 200) {
-                alert('error al crear la tarea');
-                return;
-            }
-
-            const response = await request.json();
+            const response = await addTask(url, options);
             if (!response) {
                 alert('tarea creada ok');
             }
