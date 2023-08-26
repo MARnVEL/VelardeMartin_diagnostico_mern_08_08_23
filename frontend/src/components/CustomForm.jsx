@@ -9,6 +9,7 @@ const CustomForm = ({ fnToAddATask, setTasks }) => {
     const handleFormSubmit = async (e) => {
         e.preventDefault();
         // console.log(e);
+        // !TODO: Ver qué envío al fnToAddTask
         const response = await fnToAddATask({
             description: task,
             status: false

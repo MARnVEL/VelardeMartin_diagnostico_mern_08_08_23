@@ -12,7 +12,7 @@ import {
     completeTask,
     deleteTask,
     updateTaks
-} from './services/api/task.api';
+} from './services/api/tasks.api';
 
 function App() {
     const [tasks, setTasks] = useState(null);
