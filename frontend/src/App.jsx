@@ -10,9 +10,15 @@ import {
     fetchTasks,
     addTask,
     completeTask,
-    deleteTask,
-    updateTaks
+    deleteTaskApi,
+    updateTaskApi
 } from './services/api/tasks.api';
+
+import {
+    deleteTask,
+    toggleTaskUI,
+    updateTask
+} from './ui/tasks.ui.js';
 
 function App() {
     const [tasks, setTasks] = useState(null);
@@ -39,30 +45,16 @@ function App() {
         };
         try {
             const response = await addTask(url, options);
-            if (!response) {
-                alert('tarea creada ok');
+            /*
+            if (response) {
+                alert('Tarea creada correctamente!');
             }
+            */
             return response;
         } catch (error) {
             console.log(error);
             alert(`Error: ${error.message}`);
         }
-    };
-
-
-    /**
-     * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
-     * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
-     * datos actualizados de la BD.
-     * 
-     * @param {string} id El id de la tarea que cambiará su estado de completo a incompleto o viceversa
-     */
-    const toggleTaskUI = (id) => {
-        setTasks(prevState => prevState.map(t => (
-            t._id === id
-                ? {...t, status: !t.status}
-                : t
-        )));
     };
 
     const fnToCompleteATask = async (taskId, status) => {
@@ -79,18 +71,14 @@ function App() {
         }
 
         try {
-            const request = await fetch(url, options);
 
-            if (request.status !== 200) {
-                alert('error al actualizar la tarea');
-                return;
+            const response = await completeTask(url, options);
+
+            /* 
+            if (response) {
+                alert('Tarea actualizada correctamente ✨');
             }
-
-            const response = await request.json();
-
-            if (!response) {
-                alert('tarea actualizada ok');
-            }
+            */
 
             // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
             /*
@@ -102,27 +90,13 @@ function App() {
             ! Solución: primero modifico la BD y luego hago un render de la UI sólo
             ! en la parte que necesito.
             */
-            toggleTaskUI(taskId);
-            // return response;
+            toggleTaskUI(taskId, setTasks);
+            return response;
 
         } catch (error) {
             console.log(error);
             alert(`Error: ${error.message}`);
         }
-    };
-
-    /**
-     * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
-     * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
-     * datos actualizados de la BD.
-     * 
-     * @param {string} id El id de la tarea que se eliminará de la UI.
-     */
-    const deleteTask = (id) => {
-        setTasks(prevState => {
-            // console.log('El prevState en el deleteTask: ', prevState);
-            return prevState.filter(t => t._id !== id)
-        });
     };
 
     const fnToDeleteATask = async (taskId) => {
@@ -136,37 +110,22 @@ function App() {
         }
 
         try {
-            const request = await fetch(url, options);
+            const response = deleteTaskApi(url, options)
 
-            if (request.status !== 200) {
-                alert('error al eliminar la tarea');
-                return;
-            }
-
-            const response = await request.json();
-
-            if (!response) {
-                alert('tarea actualizada ok');
-            }
-
-            // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
             /*
-            ! Problema de este método: cada vez que modifique una tarea (aunque sólo sea una parte de ella), debo volver a llamar al backend para que me haga la consulta a la BD, traer toodas las task de nuevo al estado del App() y por lo tanto, re-rederizar todas las tareas.
+            if (response) {
+                alert('Tarea eliminada con éxito ☢');
+            }
             */
-            // fetchTasks();
-            /*
-            ! Solución: primero modifico la BD y luego hago un render de la UI sólo
-            ! en la parte que necesito
-            */
-            deleteTask(taskId);
-            
-            // return response;
+
+            deleteTask(taskId, setTasks);
+            return response;
 
         } catch (error) {
             console.log(error);
             alert(`Error: ${error.message}`);
         }
-    }
+    };
 
     const enterEditMode = (task) => {
         setEditedTask(task);
@@ -178,23 +137,6 @@ function App() {
     const closeEditMode = () => {
         setIsEditing(false);
         previousFocusElement.focus();
-    };
-
-
-    /**
-     * Esta función se utiliza para actualizar una tarea en la interfaz del cliente sin
-     * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
-     * datos actualizados de la BD.
-     * 
-     * @param {object} task Un objeto tarea que es la tarea que se actualizará en la UI.
-     */
-    const updateTask = (task) => {
-        setTasks(prevState => prevState.map(t => (
-            t._id === task._id
-                ? {...t, description: task.description}
-                : t
-        )));
-        closeEditMode();
     };
 
     const fnToUpdateATask = async (task) => {
@@ -210,40 +152,17 @@ function App() {
             body: JSON.stringify({
                 description
             })
-        }
+        };
 
         try {
-            const request = await fetch(url, options);
-
-            if (request.status !== 200) {
-                alert('error al actualizar la tarea');
-                return;
-            }
-
-            const response = await request.json();
-            // console.log('La respuesta del fnToUpdateATask: ', response);
-
-            if (!response) {
-                alert('tarea actualizada ok');
-            }
-
-            // Hacemos nuevamente la consulta get al backend para traer los datos actualizados con la tarea modificada
-            /*
-            ! Problema de este método: cada vez que modifique una tarea (aunque sólo sea una parte de ella), debo volver a llamar al backend para que me haga la consulta a la BD, traer toodas las task de nuevo al estado del App() y por lo tanto, re-rederizar todas las tareas.
-            */
-            // fetchTasks();
-            /*
-            ! Solución: primero modifico la BD y luego hago un render de la UI sólo
-            ! en la parte que necesito
-            */
-            updateTask(task);
-
+            const response = await updateTaskApi(url, options);
+            updateTask(task, setTasks, closeEditMode);
+            return response;
         } catch (error) {
             console.log(error);
             alert(`Error: ${error.message}`);
         }
-
-    }
+    };
 
     return (
         <main>

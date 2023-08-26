@@ -37,7 +37,7 @@ export const completeTask = async (url, options) => {
     return response;
 };
 
-export const deleteTask = async (url, options) => {
+export const deleteTaskApi = async (url, options) => {
     const request = await fetch(url, options);
 
     if (request.status !== 200) {
@@ -49,7 +49,7 @@ export const deleteTask = async (url, options) => {
     return response;
 };
 
-export const updateTaks = async (url, options) => {
+export const updateTaskApi = async (url, options) => {
     const request = await fetch(url, options);
 
     if (request.status !== 200) {

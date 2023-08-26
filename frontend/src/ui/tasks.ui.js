@@ -1,4 +1,17 @@
 
+/**
+ * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
+ * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
+ * datos actualizados de la BD.
+ * 
+ * @param {string} id El id de la tarea que se eliminará de la UI.
+ */
+export const deleteTask = (id, setFn) => {
+    setFn(prevState => {
+        // console.log('El prevState en el deleteTask: ', prevState);
+        return prevState.filter(t => t._id !== id)
+    });
+};
 
 /**
  * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
@@ -31,26 +44,5 @@ export const updateTask = (task, setFn, closeEditMode) => {
     )));
     closeEditMode();
 };
-
-
-
-/**
- * Esta función se utiliza para cambiar el estado en la interfaz del cliente sin
- * necesidad de tener que hacer un fetch al backend para traer de nuevo todos los 
- * datos actualizados de la BD.
- * 
- * @param {string} id El id de la tarea que se eliminará de la UI.
- */
-export const deleteTask = (id, setFn) => {
-    setFn(prevState => {
-        // console.log('El prevState en el deleteTask: ', prevState);
-        return prevState.filter(t => t._id !== id)
-    });
-};
-
-
-
-
-
 
 

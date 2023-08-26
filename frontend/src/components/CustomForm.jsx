@@ -11,8 +11,7 @@ const CustomForm = ({ fnToAddATask, setTasks }) => {
         // console.log(e);
         // !TODO: Ver qué envío al fnToAddTask
         const response = await fnToAddATask({
-            description: task,
-            status: false
+            description: task
         });
 
         setTask('');
