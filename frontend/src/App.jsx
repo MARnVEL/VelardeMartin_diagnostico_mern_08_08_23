@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
 
+// Third partty libraries:
+import Swal from 'sweetalert2'
+
 // Custom components:
 import CustomForm from './components/CustomForm';
 import EditForm from './components/EditForm';
